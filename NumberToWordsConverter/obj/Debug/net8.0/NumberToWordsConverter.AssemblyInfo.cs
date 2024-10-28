@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NumberToWordsConverter")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1d6def7df00457d108e64496b76735bbf787ab86")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+97fe340bd209b0dca1a951226ec9aee7350646e9")]
 [assembly: System.Reflection.AssemblyProductAttribute("NumberToWordsConverter")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NumberToWordsConverter")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

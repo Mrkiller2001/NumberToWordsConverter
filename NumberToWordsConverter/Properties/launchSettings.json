@@ -8,6 +8,33 @@
       "sslPort": 44319
     }
   },
+  "configurations": [
+        {
+            "name": "Run Web App",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/NumberToWordsConverter/bin/Debug/net6.0/NumberToWordsConverter.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "console": "internalConsole"
+        },
+        {
+            "name": "Run Test Runner",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/NumberToWordsConverter/bin/Debug/net6.0/NumberToWordsConverter.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "console": "internalConsole",
+            "env": {
+                "TEST": "1"
+            }
+        }
+    ],
   "profiles": {
     "http": {
       "commandName": "Project",

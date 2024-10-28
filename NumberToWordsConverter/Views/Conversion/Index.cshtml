@@ -1,0 +1,142 @@
+﻿<!-- Views/Conversion/Index.cshtml -->
+@{
+    ViewData["Title"] = "Number to Words Converter";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <style>
+        /* Basic styling for a clean, centered look */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        label, h2 {
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+            button:hover {
+                background-color: #0056b3;
+            }
+
+        #result, #errorBox {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 4px;
+            display: none; /* Initially hidden */
+        }
+
+        #result {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        #errorBox {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Number to Words Converter</h2>
+
+        <label for="numberInput">Enter Number:</label>
+        <input type="text" id="numberInput" placeholder="e.g., 123.45" />
+
+        <button onclick="convertNumber()">Convert</button>
+
+        <div id="result"></div>
+        <div id="errorBox"></div>
+    </div>
+
+    <script>
+        function validateInput(input) {
+            // Basic client-side validation using regex for a positive number with up to two decimals
+            const regex = /^\d+(\.\d{1,2})?$/;
+            if (!regex.test(input)) {
+                document.getElementById("errorBox").innerText = "Invalid format. Please enter a valid number (e.g., 123.45).";
+                document.getElementById("errorBox").style.display = "block";
+                return false;
+            }
+            document.getElementById("errorBox").style.display = "none";
+            return true;
+        }
+
+        function convertNumber() {
+            const inputNumber = document.getElementById("numberInput").value;
+
+            // Run client-side validation before sending the request
+            if (!validateInput(inputNumber)) {
+                return; // Stop if input is invalid
+            }
+
+            fetch("/Conversion/ConvertNumber", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ inputNumber })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById("result").innerText = "Output: " + data.result;
+                        document.getElementById("result").style.display = "block"; // Show result box
+                        document.getElementById("errorBox").style.display = "none"; // Hide error box
+                    } else {
+                        document.getElementById("result").style.display = "none"; // Hide previous result
+                        document.getElementById("errorBox").innerText = data.result; // Show error message
+                        document.getElementById("errorBox").style.display = "block"; // Display error box
+                    }
+                })
+                .catch(error => {
+                    console.error("Fetch Error:", error);
+                    document.getElementById("result").style.display = "none";
+                    document.getElementById("errorBox").innerText = "An unexpected error occurred. Please try again.";
+                    document.getElementById("errorBox").style.display = "block";
+                });
+        }
+    </script>
+
+</body>
+</html>
